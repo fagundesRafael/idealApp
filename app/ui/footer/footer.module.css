@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    background-color: var(--bgSoft);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.logoContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 200;
+    font-size: 14px;
+}
+
+.created {
+    font-weight: 200;
+    font-size: 14px;
+}
+
+.created span {
+    color: var(--textSoft);
+    font-style: italic;
+}
