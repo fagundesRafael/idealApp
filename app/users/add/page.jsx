@@ -22,7 +22,7 @@ const AddUserPage = () => {
           <option value={true}>Yes</option>
           <option value={false}>No</option>
         </select>
-        <select name="isActive" id="isActive">
+        <select name="isActive" id="isActive"> 
           <option value={true} selected>
             Is Active?
           </option>
