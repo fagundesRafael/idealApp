@@ -11,10 +11,16 @@ import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const pathname = usePathname();
+  const ordenedPathname = pathname.split("/");
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>{pathname.split("/")}</div>
+      {ordenedPathname.length === 2 ? (
+        <div className={styles.title}>{ordenedPathname[1]}</div>
+      ) : (
+        <div className={styles.title}>Adicionar {ordenedPathname[1].split("s")}</div>
+      )}
+
       <div className={styles.menu}>
         <div className={styles.search}>
           <MdSearch />

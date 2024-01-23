@@ -17,56 +17,56 @@ import Image from "next/image";
 
 const menuItems = [
   {
-    title: "Pages",
+    title: "Páginas",
     list: [
       {
-        title: "Dashboard",
-        path: "/dashboard",
+        title: "Painel",
+        path: "/painel",
         icon: <MdDashboard />,
       },
       {
-        title: "Users",
-        path: "/users",
+        title: "Clientes",
+        path: "/clientes",
         icon: <MdSupervisedUserCircle />,
       },
       {
-        title: "Products",
-        path: "/products",
+        title: "Produtos",
+        path: "/produtos",
         icon: <MdShoppingBag />,
       },
       {
-        title: "Transactions",
-        path: "/transactions",
+        title: "Transações",
+        path: "/transacoes",
         icon: <MdAttachMoney />,
       },
     ],
   },
   {
-    title: "Analytics",
+    title: "Estatísticas",
     list: [
       {
-        title: "Revenue",
-        path: "/revenue",
+        title: "Receita",
+        path: "/receita",
         icon: <MdWork />,
       },
       {
-        title: "Reports",
-        path: "/reports",
+        title: "Relatórios",
+        path: "/relatirios",
         icon: <MdAnalytics />,
       },
       {
-        title: "Teams",
-        path: "/teams",
+        title: "Equipe",
+        path: "/equipe",
         icon: <MdPeople />,
       },
     ],
   },
   {
-    title: "User",
+    title: "Usuário",
     list: [
       {
-        title: "Settings",
-        path: "/settings",
+        title: "Configurações",
+        path: "/configuracoes",
         icon: <MdOutlineSettings />,
       },
       {

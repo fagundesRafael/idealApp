@@ -1,30 +1,28 @@
 import React from "react";
-import styles from "../../ui/users/singleUser.module.css";
+import styles from "../../ui/clientes/singleCliente.module.css";
 import Image from "next/image";
 
-const SingleUserPage = () => {
+const SingleClientePage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.infoContainer}>
         <div className={styles.imgContainer}>
           <Image alt="" src="/noavatar.png" fill />
         </div>
-        John Doe
+        João das Couves
       </div>
       <div className={styles.formContainer}>
         <form className={styles.form}>
-          <label>Username</label>
-          <input type="text" name="username" placeholder="John Doe" />
+          <label>Nome do usuário:</label>
+          <input type="text" name="username" placeholder="João das Couves" />
           <label>Email</label>
-          <input type="email" name="email" placeholder="johndoe@gmail.com" />
-          <label>Password</label>
-          <input type="password" name="password" placeholder="password" />
-          <label>Phone</label>
-          <input type="text" name="phone" placeholder="+55 69 9 9377-5174" />
-          <label>Address</label>
-          <textarea type="text" name="address" placeholder="New York" />
-          <label>Is Admin?</label>
-          <select name="isAdmin" id="isAdmin">
+          <input type="email" name="email" placeholder="joaodascouves@gmail.com" />
+          <label>Telefone:</label>
+          <input type="number" name="phone" placeholder="69 9 9377-5174" />
+          <label>Endereço:</label>
+          <textarea type="text" name="address" placeholder="Machadinho D'Oeste RO" />
+          <label>Pessoa Jurídica?</label>
+          <select name="isCompany" id="isCompany">
             <option value={false}>No</option>
             <option value={true}>Yes</option>
           </select>
@@ -39,4 +37,4 @@ const SingleUserPage = () => {
   );
 };
 
-export default SingleUserPage;
+export default SingleClientePage;

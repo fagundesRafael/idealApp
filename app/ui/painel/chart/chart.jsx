@@ -13,37 +13,37 @@ import {
 
 const data = [
   {
-    name: "Sun",
+    name: "Dom",
     visit: 4000,
     click: 2400,
   },
   {
-    name: "Mon",
+    name: "Seg",
     visit: 3000,
     click: 1398,
   },
   {
-    name: "Tue",
+    name: "Ter",
     visit: 2000,
     click: 3800,
   },
   {
-    name: "Wed",
+    name: "Qua",
     visit: 2780,
     click: 3908,
   },
   {
-    name: "Thu",
+    name: "Qui",
     visit: 1890,
     click: 4800,
   },
   {
-    name: "Fri",
+    name: "Sex",
     visit: 2390,
     click: 3800,
   },
   {
-    name: "Sat",
+    name: "Sab",
     visit: 3490,
     click: 4300,
   },
@@ -52,7 +52,7 @@ const data = [
 const Chart = () => {
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Weekly Recap</h2>
+      <h2 className={styles.title}>Relatório semanal</h2>
       <ResponsiveContainer width="100%" height="90%">
         <LineChart
           width={500}

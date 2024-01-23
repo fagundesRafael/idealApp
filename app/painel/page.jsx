@@ -1,9 +1,9 @@
 import React from "react";
-import styles from "../ui/dashboard/dashboard.module.css";
-import Card from "../ui/dashboard/card/card";
-import Rightbar from "../ui/dashboard/rightbar/rightbar";
-import Transactions from "../ui/dashboard/transactions/transactions";
-import Chart from "../ui/dashboard/chart/chart";
+import styles from "../ui/painel/painel.module.css";
+import Card from "../ui/painel/card/card";
+import Rightbar from "../ui/painel/rightbar/rightbar";
+import Transactions from "../ui/painel/transactions/transactions";
+import Chart from "../ui/painel/chart/chart";
 
 const Dahsboard = () => {
   return (

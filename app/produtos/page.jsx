@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../ui/products/products.module.css";
+import styles from "../ui/produtos/produtos.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import Search from "../ui/search/search";
@@ -10,19 +10,19 @@ const ProductsPage = () => {
     <div className={styles.container}>
       <div className={styles.top}>
         <Search placeholder="Search for a product..." />
-        <Link href="/products/add">
+        <Link href="/produtos/add">
           <button className={styles.addButton}>Add</button>
         </Link>
       </div>
       <table className={styles.table}>
         <thead>
           <tr>
-            <td>Title</td>
-            <td>Description</td>
-            <td>Price</td>
-            <td>Created At</td>
-            <td>Stock</td>
-            <td>Action</td>
+            <td>Nome</td>
+            <td>Descrição</td>
+            <td>Preço</td>
+            <td>Marca</td>
+            <td>Estoque</td>
+            <td>Ação</td>
           </tr>
         </thead>
         <tbody>
@@ -36,22 +36,22 @@ const ProductsPage = () => {
                   width={40}
                   height={40}
                 />
-                iPhone
+                Lona
               </div>
             </td>
-            <td>Desc</td>
-            <td>$ 999</td>
-            <td>13.01.2022</td>
+            <td>Mt²</td>
+            <td>R$ 30,00</td>
+            <td>Datase</td>
             <td>72</td>
             <div className={styles.buttons}>
               <Link href="/products/test">
                 <button className={`${styles.button} ${styles.view}`}>
-                  View
+                  Ver
                 </button>
               </Link>
               <Link href="/">
                 <button className={`${styles.button} ${styles.delete}`}>
-                  Delete
+                  Deletar
                 </button>
               </Link>
             </div>

@@ -10,36 +10,34 @@ const Rightbar = () => {
           <Image className={styles.bg} src="/astronaut.png" alt="" fill />
         </div>
         <div className={styles.text}>
-          <span className={styles.notification}>🔥 Available Now</span>
+          <span className={styles.notification}>🔥 Disponível</span>
           <h3 className={styles.title}>
-            How to use the new version of the admin dashboard?
+            Precisando aprender como utilizar o idealApp?
           </h3>
-          <span className={styles.subtitle}>Takes 4 minutes to learn</span>
+          <span className={styles.subtitle}>Só 4 minutos pra aprenser (se for retardado).</span>
           <p className={styles.desc}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Reprehenderit eius libero perspiciatis recusandae possimus.
+            Pra você que é retardado e não consegue se virar sozinho, baixe o
+            vídeo tutorial e aprenda seu jumento!
           </p>
           <button className={styles.button}>
             <MdPlayCircleFilled />
-            Watch
+            Assista
           </button>
         </div>
       </div>
       <div className={styles.item}>
         <div className={styles.text}>
-          <span className={styles.notification}>🚀 Coming Soon</span>
+          <span className={styles.notification}>🚀 Atualizaçãoes</span>
           <h3 className={styles.title}>
-            New server actions are available, partial pre-rendering is coming
-            up!
+            Verificar aqui atualizações do aplicativo!
           </h3>
-          <span className={styles.subtitle}>Boost your productivity</span>
+          <span className={styles.subtitle}>Aprimore o desenpenho da aplicação!</span>
           <p className={styles.desc}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Reprehenderit eius libero perspiciatis recusandae possimus.
+            Qualquer novidade pertinente ao sistema você será sempre notificado por aqui!
           </p>
           <button className={styles.button}>
             <MdReadMore />
-            Learn
+            Verificar
           </button>
         </div>
       </div>

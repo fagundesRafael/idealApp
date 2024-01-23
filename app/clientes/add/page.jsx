@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "../../ui/users/addUser.module.css";
+import styles from "../../ui/clientes/addCliente.module.css";
 
-const AddUserPage = () => {
+const AddClientePage = () => {
   return (
     <div className={styles.container}>
       <form action="" className={styles.form}>
@@ -41,4 +41,4 @@ const AddUserPage = () => {
   );
 };
 
-export default AddUserPage;
+export default AddClientePage;

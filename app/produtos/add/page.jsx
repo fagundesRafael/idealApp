@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../ui/products/addProduct.module.css";
+import styles from "../../ui/produtos/addProduto.module.css";
 
 const AddProductPage = () => {
   return (

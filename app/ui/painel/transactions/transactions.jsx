@@ -5,14 +5,14 @@ import Image from "next/image";
 const Transactions = () => {
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Latest Transactions</h2>
+      <h2 className={styles.title}>Últimas Transações</h2>
       <table className={styles.table}>
         <thead>
           <tr>
-            <td>Name</td>
+            <td>Nome</td>
             <td>Status</td>
-            <td>Date</td>
-            <td>Amount</td>
+            <td>Data</td>
+            <td>Montante</td>
           </tr>
         </thead>
         <tbody>
@@ -26,16 +26,16 @@ const Transactions = () => {
                   height={40}
                   alt=""
                 />
-                John Doe
+                Zé da Beira
               </div>
             </td>
             <td>
               <span className={`${styles.status} ${styles.pending}`}>
-                Pending
+                Pendente
               </span>
             </td>
             <td>14/02/2024</td>
-            <td>$ 3.200</td>
+            <td>R$ 2.200</td>
           </tr>
           <tr>
             <td>
@@ -47,14 +47,14 @@ const Transactions = () => {
                   height={40}
                   alt=""
                 />
-                John Doe
+                João das Couves
               </div>
             </td>
             <td>
-              <span className={`${styles.status} ${styles.done}`}>done</span>
+              <span className={`${styles.status} ${styles.done}`}>Concluso</span>
             </td>
             <td>14/02/2024</td>
-            <td>$ 3.200</td>
+            <td>R$ 3.000</td>
           </tr>
           <tr>
             <td>
@@ -66,16 +66,16 @@ const Transactions = () => {
                   height={40}
                   alt=""
                 />
-                John Doe
+                Maria das Quengas
               </div>
             </td>
             <td>
               <span className={`${styles.status} ${styles.cancelled}`}>
-                Cancelled
+                Cancelado
               </span>
             </td>
             <td>14/02/2024</td>
-            <td>$ 3.200</td>
+            <td>R$ 600,00</td>
           </tr>
         </tbody>
       </table>

@@ -1,27 +1,27 @@
 import React from "react";
-import styles from "../ui/users/users.module.css";
+import styles from "../ui/clientes/clientes.module.css";
 import Search from "../ui/search/search";
 import Link from "next/link";
 import Image from "next/image";
 import Pagination from "../ui/pagination/pagination";
 
-const UsersPage = () => {
+const ClientesPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <Search placeholder="Search for an user..." />
-        <Link href="/users/add">
+        <Search placeholder="Procurar um cliente..." />
+        <Link href="/clientes/add">
           <button className={styles.addButton}>Add</button>
         </Link>
       </div>
       <table className={styles.table}>
         <thead>
           <tr>
-            <td>Name</td>
+            <td>Nome</td>
             <td>Email</td>
-            <td>Created At</td>
-            <td>Role</td>
-            <td>Status</td>
+            <td>Telefone</td>
+            <td>Transações</td>
+            <td>Pendências</td>
             <td>Action</td>
           </tr>
         </thead>
@@ -40,18 +40,18 @@ const UsersPage = () => {
               </div>
             </td>
             <td>john@gmail.com</td>
-            <td>13.01.2022</td>
-            <td>Admin</td>
-            <td>active</td>
+            <td>9 9377-5174</td>
+            <td></td>
+            <td>nenhuma</td>
             <div className={styles.buttons}>
-              <Link href="/users/test">
+              <Link href="/clientes/test">
                 <button className={`${styles.button} ${styles.view}`}>
-                  View
+                  Ver
                 </button>
               </Link>
               <Link href="/">
                 <button className={`${styles.button} ${styles.delete}`}>
-                  Delete
+                  Deletar
                 </button>
               </Link>
             </div>
@@ -63,4 +63,4 @@ const UsersPage = () => {
   );
 };
 
-export default UsersPage;
+export default ClientesPage;
