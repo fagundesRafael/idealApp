@@ -17,10 +17,10 @@ const ProductsPage = () => {
       <table className={styles.table}>
         <thead>
           <tr>
-            <td>Nome</td>
-            <td>Descrição</td>
+            <td>Item</td>
+            <td>Unid. Medida</td>
             <td>Preço</td>
-            <td>Marca</td>
+            <td>Tipo</td>
             <td>Estoque</td>
             <td>Ação</td>
           </tr>
@@ -36,12 +36,12 @@ const ProductsPage = () => {
                   width={40}
                   height={40}
                 />
-                Lona
+                Banner
               </div>
             </td>
             <td>Mt²</td>
             <td>R$ 30,00</td>
-            <td>Datase</td>
+            <td>Lona</td>
             <td>72</td>
             <div className={styles.buttons}>
               <Link href="/products/test">

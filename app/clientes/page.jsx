@@ -11,7 +11,7 @@ const ClientesPage = () => {
       <div className={styles.top}>
         <Search placeholder="Procurar um cliente..." />
         <Link href="/clientes/add">
-          <button className={styles.addButton}>Add</button>
+          <button className={styles.addButton}>Adicionar</button>
         </Link>
       </div>
       <table className={styles.table}>
@@ -22,7 +22,7 @@ const ClientesPage = () => {
             <td>Telefone</td>
             <td>Transações</td>
             <td>Pendências</td>
-            <td>Action</td>
+            <td>Ações</td>
           </tr>
         </thead>
         <tbody>
@@ -36,7 +36,7 @@ const ClientesPage = () => {
                   width={40}
                   height={40}
                 />
-                John Doe
+                João das Couves
               </div>
             </td>
             <td>john@gmail.com</td>
