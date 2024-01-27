@@ -30,19 +30,24 @@ const clientSchema = new mongoose.Schema(
 
 const productSchema = new mongoose.Schema(
   {
-    item: {
+    title: {
       type: String,
       required: true,
       unique: true,
       min: 3,
       max: 20,
     },
-    unit: {
+    unidType: {
       type: String,
       required: true,
       unique: true,
     },
-    price: {
+    originPrice: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    orderPrice: {
       type: Number,
       required: true,
       min: 0,
@@ -52,13 +57,10 @@ const productSchema = new mongoose.Schema(
       required: true,
       min: 0,
     },
-    type: {
+    materialType: {
       type: String,
     },
     productImage: {
-      type: String,
-    },
-    desc: {
       type: String,
     },
   },

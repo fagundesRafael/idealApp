@@ -7,7 +7,7 @@ const AddProductPage = () => {
     <div className={styles.container}>
       <form action="" className={styles.form}>
         <input type="text" placeholder="item" name="item" required />
-        <select name="unit" id="unit" required>
+        <select name="unidType" id="unidType" required>
           <option value="" required>
             unidade de medida
           </option>
@@ -15,15 +15,16 @@ const AddProductPage = () => {
           <option value="mt²">mt²</option>
           <option value="weight">Kg</option>
         </select>
-        <input type="number" placeholder="preço" name="price" />
+        <input type="number" placeholder="preço de origem" name="originPrice" />
+        <input type="number" placeholder="preço atual" name="orderPrice" />
         <input type="number" placeholder="estoque" name="stock" />
-        <select name="type" id="type">
+        <select name="materialType" id="materialType">
           <option value="">tipo do material</option>
           <option value="sticker">adesivo comum</option>
           <option value="cropped-sticker">adesivo recortado</option>
           <option value="perforated-sticker">adesivo perfurado</option>
           <option value="design">arte</option>
-          <option value="banner">lona</option>
+          <option value="lona">lona</option>
           <option value="PVC">PVC</option>
         </select>
         <input type="file" id="productImage" name="productImage" />

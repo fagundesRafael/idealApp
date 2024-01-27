@@ -4,8 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import Search from "../ui/search/search";
 import Pagination from "../ui/pagination/pagination";
+import { fetchProducts } from "../lib/data";
 
-const ProductsPage = () => {
+const ProductsPage = async ({searchParams}) => {
+  const q = searchParams?.q || "";
+  const page = searchParams?.page || 1;
+  const { count, products } = await fetchProducts(q, page);
+
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -18,49 +23,51 @@ const ProductsPage = () => {
         <thead>
           <tr>
             <td>Item</td>
-            <td>Unid. Medida</td>
             <td>Preço</td>
+            <td>Preço originário</td>
             <td>Tipo</td>
             <td>Estoque</td>
             <td>Ação</td>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <div className={styles.product}>
-                <Image
-                  className={styles.productImage}
-                  src="/noproduct.jpg"
-                  alt=""
-                  width={40}
-                  height={40}
-                />
-                Banner
+          {products.map((product) => (
+            <tr key={product.id}>
+              <td>
+                <div className={styles.product}>
+                  <Image
+                    className={styles.productImage}
+                    src={product.productImage || "/noproduct.jpg"}
+                    alt=""
+                    width={40}
+                    height={40}
+                  />
+                  {product.title}
+                </div>
+              </td>
+              <td>R$ {product.orderPrice}</td>
+              <td>R$ {product.originPrice}</td>
+              <td>{product.materialType}</td>
+              <td>{`${product.stock} ${product.unidType}`}</td>
+              <div className={styles.buttons}>
+                <Link href={`/produtos/${product.id}`}>
+                  <button className={`${styles.button} ${styles.view}`}>
+                    Ver
+                  </button>
+                </Link>
+                <Link href="/">
+                  <button className={`${styles.button} ${styles.delete}`}>
+                    Deletar
+                  </button>
+                </Link>
               </div>
-            </td>
-            <td>Mt²</td>
-            <td>R$ 30,00</td>
-            <td>Lona</td>
-            <td>72</td>
-            <div className={styles.buttons}>
-              <Link href="/products/test">
-                <button className={`${styles.button} ${styles.view}`}>
-                  Ver
-                </button>
-              </Link>
-              <Link href="/">
-                <button className={`${styles.button} ${styles.delete}`}>
-                  Deletar
-                </button>
-              </Link>
-            </div>
-          </tr>
+            </tr>
+          ))}
         </tbody>
       </table>
-      <Pagination/>
+      <Pagination count={count} />
     </div>
-  )
+  );
 };
 
 export default ProductsPage;
