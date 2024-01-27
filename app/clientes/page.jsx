@@ -4,12 +4,15 @@ import Search from "../ui/search/search";
 import Link from "next/link";
 import Image from "next/image";
 import Pagination from "../ui/pagination/pagination";
+import { fetchClients } from "../lib/data";
 
-const ClientesPage = () => {
+const ClientesPage = async () => {
+  const clients = await fetchClients();
+  console.log(clients);
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <Search placeholder="Procurar um cliente..." />
+        <Search placeholder="Procurar um cliente..."/>
         <Link href="/clientes/add">
           <button className={styles.addButton}>Adicionar</button>
         </Link>
@@ -26,25 +29,26 @@ const ClientesPage = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
+          {clients.map((client) => (
+            <tr key={client.id}>
             <td>
-              <div className={styles.user}>
+              <div className={styles.client}>
                 <Image
-                  className={styles.userImage}
-                  src="/noavatar.png"
+                  className={styles.clientImage}
+                  src={client.clientImage || "/noavatar.png"}
                   alt=""
                   width={40}
                   height={40}
                 />
-                João das Couves
+                {client.name}
               </div>
             </td>
-            <td>john@gmail.com</td>
-            <td>9 9377-5174</td>
+            <td>{client.email}</td>
+            <td>{client.phone}</td>
             <td></td>
             <td>nenhuma</td>
             <div className={styles.buttons}>
-              <Link href="/clientes/test">
+              <Link href={`/clientes/${client.id}`}>
                 <button className={`${styles.button} ${styles.view}`}>
                   Ver
                 </button>
@@ -56,9 +60,10 @@ const ClientesPage = () => {
               </Link>
             </div>
           </tr>
+            ))}
         </tbody>
       </table>
-      <Pagination/>
+      <Pagination />
     </div>
   );
 };

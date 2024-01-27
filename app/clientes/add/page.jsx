@@ -9,8 +9,8 @@ const AddClientePage = () => {
         <input type="text" placeholder="nome" name="name" required />
         <input type="email" placeholder="email" name="email" />
         <input type="text" placeholder="telefone" name="phone" required />
-        <input type="file" id="image" name="image" />
-        <label htmlFor="image"> <MdUploadFile className={styles.upfile}/> imagem</label>
+        <input type="file" id="clientImage" name="clientImage" />
+        <label htmlFor="clientImage"> <MdUploadFile className={styles.upfile}/> imagem</label>
         <textarea
           name="address"
           id="address"

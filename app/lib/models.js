@@ -18,7 +18,7 @@ const clientSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    image: {
+    clientImage: {
       type: String,
     },
     address: {
@@ -66,6 +66,6 @@ const productSchema = new mongoose.Schema(
 );
 
 export const Client =
-  mongoose.models.Client || mongoose.model("Cliente", clientSchema);
+  mongoose.models.Client || mongoose.model("Client", clientSchema); 
 export const Product =
   mongoose.models.Product || mongoose.model("Product", productSchema);
