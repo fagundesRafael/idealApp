@@ -1,16 +1,15 @@
 import React from "react";
 import styles from "../../ui/clientes/addCliente.module.css";
-import { MdUploadFile } from "react-icons/md";
+import { addClient } from "@/app/lib/actions";
 
 const AddClientePage = () => {
   return (
     <div className={styles.container}>
-      <form action="" className={styles.form}>
+      <form action={addClient} className={styles.form}>
         <input type="text" placeholder="nome" name="name" required />
         <input type="email" placeholder="email" name="email" />
-        <input type="text" placeholder="telefone" name="phone" required />
-        <input type="file" id="clientImage" name="clientImage" />
-        <label htmlFor="clientImage"> <MdUploadFile className={styles.upfile}/> imagem</label>
+        <input type="text" placeholder="telefone" name="phone" />
+        <input type="text" placeholder="imagem (URL)" id="clientImage" name="clientImage" />
         <textarea
           name="address"
           id="address"

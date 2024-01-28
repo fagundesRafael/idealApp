@@ -1,12 +1,12 @@
 import React from "react";
 import styles from "../../ui/produtos/addProduto.module.css";
-import { MdUploadFile } from "react-icons/md";
+import { addProduct } from "@/app/lib/actions";
 
 const AddProductPage = () => {
   return (
     <div className={styles.container}>
-      <form action="" className={styles.form}>
-        <input type="text" placeholder="item" name="item" required />
+      <form action={addProduct} className={styles.form}>
+        <input type="text" placeholder="title" name="title" required />
         <select name="unidType" id="unidType" required>
           <option value="" required>
             unidade de medida
@@ -18,17 +18,15 @@ const AddProductPage = () => {
         <input type="number" placeholder="preço de origem" name="originPrice" />
         <input type="number" placeholder="preço atual" name="orderPrice" />
         <input type="number" placeholder="estoque" name="stock" />
-        <select name="materialType" id="materialType">
+        <select name="materialType" id="materialType" required>
           <option value="">tipo do material</option>
-          <option value="sticker">adesivo comum</option>
-          <option value="cropped-sticker">adesivo recortado</option>
-          <option value="perforated-sticker">adesivo perfurado</option>
-          <option value="design">arte</option>
+          <option value="adesivo comum">adesivo comum</option>
+          <option value="adesivo recortado">adesivo recortado</option>
+          <option value="adesivo perfurado">adesivo perfurado</option>
           <option value="lona">lona</option>
-          <option value="PVC">PVC</option>
+          <option value="pvc">pvc</option>
         </select>
-        <input type="file" id="productImage" name="productImage" />
-        <label htmlFor="productImage"> <MdUploadFile className={styles.upfile}/> imagem</label>
+        <input type="text" placeholder="imagem (URL)" id="productImage" name="productImage" />
         <textarea
           name="desc"
           id="desc"

@@ -56,15 +56,6 @@
   width: 100%;
 }
 
-.form input[type="file"] {
-  display: none;
-}
-
-.upfile {
-  opacity: 50%;
-}
-
-
 .form button {
   width: 100%;
   padding: 30px;
