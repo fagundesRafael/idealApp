@@ -37,3 +37,7 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
+.form span {
+  color:crimson
+}
