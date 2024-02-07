@@ -5,11 +5,12 @@ import Link from "next/link";
 import Image from "next/image";
 import Pagination from "../ui/pagination/pagination";
 import { fetchClients } from "../lib/data";
+import { deleteClient } from "../lib/actions";
 
 const ClientesPage = async ({ searchParams }) => {
   const q = searchParams?.q || "";
-  const page = searchParams?.page || 1
-  const {count, clients} = await fetchClients(q, page);
+  const page = searchParams?.page || 1;
+  const { count, clients } = await fetchClients(q, page);
 
   return (
     <div className={styles.container}>
@@ -55,11 +56,12 @@ const ClientesPage = async ({ searchParams }) => {
                     Ver
                   </button>
                 </Link>
-                <Link href="/">
+                <form action={deleteClient}>
+                  <input type="hidden" name="id" value={client.id} />
                   <button className={`${styles.button} ${styles.delete}`}>
                     Deletar
                   </button>
-                </Link>
+                </form>
               </div>
             </tr>
           ))}

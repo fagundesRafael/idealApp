@@ -13,7 +13,7 @@ const AddProductPage = () => {
           </option>
           <option value="unidade">unidade</option>
           <option value="mt²">mt²</option>
-          <option value="weight">Kg</option>
+          <option value="peso">Kg</option>
         </select>
         <input type="number" placeholder="preço de origem" name="originPrice" />
         <input type="number" placeholder="preço atual" name="orderPrice" />
@@ -33,7 +33,7 @@ const AddProductPage = () => {
           rows="8"
           placeholder="descrição"
         ></textarea>
-        <button>Submit</button>
+        <button>Registrar</button>
       </form>
     </div>
   );

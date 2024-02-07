@@ -1,36 +1,34 @@
 import React from "react";
 import styles from "../../ui/clientes/singleCliente.module.css";
 import Image from "next/image";
+import { fetchClient } from "@/app/lib/data";
+import { updateClient } from "@/app/lib/actions";
 
-const SingleClientePage = () => {
+const SingleClientePage = async ({params}) => {
+  const { id } = params
+  const client = await fetchClient(id)
   return (
     <div className={styles.container}>
       <div className={styles.infoContainer}>
         <div className={styles.imgContainer}>
-          <Image alt="" src="/noavatar.png" fill />
+          <Image alt="" src={client.clientImage || "/noavatar.png"} fill />
         </div>
-        João das Couves
+        {client.name}
       </div>
       <div className={styles.formContainer}>
-        <form className={styles.form}>
+        <form action={updateClient} className={styles.form}>
+          <input type="hidden" name="id" value={client.id} />
           <label>Nome do usuário:</label>
-          <input type="text" name="username" placeholder="João das Couves" />
+          <input type="text" name="username" placeholder={client.name} />
           <label>Email</label>
-          <input type="email" name="email" placeholder="joaodascouves@gmail.com" />
+          <input type="email" name="email" placeholder={client.email} />
           <label>Telefone:</label>
-          <input type="number" name="phone" placeholder="69 9 9377-5174" />
+          <input type="number" name="phone" placeholder={client.phone} />
+          <label>Imagem (URL):</label>
+          <input type="string" name="clientImage" placeholder={client.clientImage} />
           <label>Endereço:</label>
-          <textarea type="text" name="address" placeholder="Machadinho D'Oeste RO" />
-          <label>Pessoa Jurídica?</label>
-          <select name="isCompany" id="isCompany">
-            <option value={false}>No</option>
-            <option value={true}>Yes</option>
-          </select>
-          <label>Is Active?</label>
-          <select name="isActive" id="isActive">
-            <option value={false}>No</option>
-            <option value={true}>Yes</option>
-          </select>
+          <textarea type="text" name="address" placeholder={client.address} />
+          <button>Atualizar</button>
         </form>
       </div>
     </div>
