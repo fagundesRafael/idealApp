@@ -11,6 +11,7 @@ import {
   MdOutlineSettings,
   MdHelpCenter,
   MdLogout,
+  MdDesignServices,
 } from "react-icons/md";
 import MenuLink from "../menulink/menuLink";
 import Image from "next/image";
@@ -33,6 +34,11 @@ const menuItems = [
         title: "Produtos",
         path: "/produtos",
         icon: <MdShoppingBag />,
+      },
+      {
+        title: "Serviços",
+        path: "/servicos",
+        icon: <MdDesignServices />,
       },
       {
         title: "Transações",

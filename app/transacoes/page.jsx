@@ -1,19 +1,18 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
-import styles from "../ui/produtos/produtos.module.css";
-import Link from "next/link";
-import Image from "next/image";
+import styles from "../ui/clientes/clientes.module.css";
 import Search from "../ui/search/search";
+import Link from "next/link";
 import Pagination from "../ui/pagination/pagination";
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 
-const ProductsPage = () => {
+const TransacoesPage = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const unsub = onSnapshot(
-      collection(db, "products"),
+      collection(db, "transactions"),
       (snapShot) => {
         let list = [];
         snapShot.docs.forEach((doc) => {
@@ -33,7 +32,7 @@ const ProductsPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      await deleteDoc(doc(db, "products", id));
+      await deleteDoc(doc(db, "transactions", id));
       setData(data.filter((item) => item.id !== id));
     } catch (error) {
       console.log(error);
@@ -43,39 +42,44 @@ const ProductsPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <Search placeholder="Procure por um produto..." />
-        <Link href="/produtos/add">
+        <Search placeholder="Procurar uma transação..." />
+        <Link href="/transacoes/add">
           <button className={styles.addButton}>Add</button>
         </Link>
       </div>
       <table className={styles.table}>
         <thead>
           <tr>
-            <td>Nome</td>
-            <td>Unid. de medida</td>
-            <td>Preço de origem</td>
-            <td>Ação</td>
+            <td>Transação</td>
+            <td>ID</td>
+            <td>Produto</td>
+            <td>Serviço</td>
+            <td>Quantidade</td>
+            <td>Valor</td>
+            <td>Lucro</td>
+            <td>Status</td>
+            <td>Ações</td>
           </tr>
         </thead>
         <tbody>
-            {data.map(itemData => (
-              <tr key={itemData.product}>
-            <td>
-              <div className={styles.product}>
-                <Image
-                  className={styles.productImage}
-                  src={itemData.img || "/noproduct.jpg"}
-                  alt=""
-                  width={40}
-                  height={40}
-                  />
-                {itemData.product}
-              </div>
-            </td>
-            <td>{itemData.measurementUnit}</td>
-            <td>R$ {itemData.originPrice}</td>
-            <td className={styles.buttons}>
-                <Link href={`/produtos/${itemData.id}/`}>
+          {data.map((itemData) => (
+            <tr key={itemData.id}>
+              <td className={styles.user}>
+                {itemData.transaction}
+              </td>
+              <td>{itemData.id}</td>
+              <td>{itemData.product || "_"}</td>
+              <td>{itemData.service || "_"}</td>
+              <td>{itemData.quantity} {itemData.measurementeUnit}</td>
+              <td>R$ {itemData.finalPrice}</td>
+              <td>R$ {(itemData.payload) - (itemData.originPrice)}</td>
+              {itemData.payload < itemData.finalPrice ? (
+                <td>negativo</td>
+              ) : (
+                <td>positivo</td>
+              )}
+              <td className={styles.buttons}>
+                <Link href={`/transacoes/${itemData.id}/`}>
                   <button className={`${styles.button} ${styles.view}`}>
                     Ver
                   </button>
@@ -84,13 +88,13 @@ const ProductsPage = () => {
                     Deletar
                   </button>
               </td>
-          </tr>
-        ))}
+            </tr>
+          ))}
         </tbody>
       </table>
-      <Pagination/>
+      <Pagination />
     </div>
-  )
+  );
 };
 
-export default ProductsPage;
+export default TransacoesPage;
