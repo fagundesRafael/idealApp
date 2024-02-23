@@ -5,8 +5,22 @@
     border-radius: 10px;
 }
 
-.title {
-    font-size: 200;
+.title, .topInfos select {
+    font-size: 20px;
     color: var(--textSoft);
     margin-bottom: 20px;
+}
+
+.topInfos {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.topInfos select{
+    background-color: var(--bgSoft);
+    border: none;
+    font-weight: lighter;
+    opacity: 80%;
+    font-style: italic;
 }

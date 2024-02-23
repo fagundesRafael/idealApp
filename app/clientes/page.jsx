@@ -4,12 +4,16 @@ import styles from "../ui/clientes/clientes.module.css";
 import Search from "../ui/search/search";
 import Link from "next/link";
 import Image from "next/image";
-import Pagination from "../ui/pagination/pagination";
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 
+const timeMonthNow = new Date().toString().slice(4, 7);
+const timeYearNow = new Date().toString().slice(11, 15);
+
 const ClientesPage = () => {
   const [data, setData] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState(timeMonthNow);
+  const [selectedYear, setSelectedYear] = useState(timeYearNow);
 
   useEffect(() => {
     const unsub = onSnapshot(
@@ -40,12 +44,56 @@ const ClientesPage = () => {
     }
   };
 
+
+
+  const selectedData = data.filter(
+    (item) =>
+      item.timeStamp.toDate().toString().slice(4, 15).includes(selectedMonth) &&
+      item.timeStamp.toDate().toString().slice(4, 15).includes(selectedYear)
+  );
+
+
   return (
     <div className={styles.container}>
       <div className={styles.top}>
         <Search placeholder="Procurar um cliente..." />
+        <div className={styles.filterData}>
+          <label>Exibir clientes registrados em: </label>
+        <select
+          value={selectedMonth}
+          onChange={(e) => setSelectedMonth(e.target.value)}
+          className={styles.monthSelect}
+        >
+          <option value={""}>Todos os meses</option>
+          <option value={"Jan"}>Janeiro</option>
+          <option value={"Feb"}>Fevereiro</option>
+          <option value={"Mar"}>Março</option>
+          <option value={"Apr"}>Abril</option>
+          <option value={"May"}>Maio</option>
+          <option value={"Jun"}>Junho</option>
+          <option value={"Jul"}>Julho</option>
+          <option value={"Aug"}>Agosto</option>
+          <option value={"Sep"}>Setembro</option>
+          <option value={"Oct"}>Outubro</option>
+          <option value={"Nov"}>Novembro</option>
+          <option value={"Dec"}>Dezembro</option>
+        </select>
+        <label>de </label>
+        <select
+          value={selectedYear}
+          onChange={(e) => setSelectedYear(e.target.value)}
+          className={styles.yearSelect}
+        >
+          <option value={""}>Todos os anos</option>
+          <option value={"2024"}>2024</option>
+          <option value={"2025"}>2025</option>
+          <option value={"2026"}>2026</option>
+          <option value={"2027"}>2027</option>
+          <option value={"2028"}>2028</option>
+        </select>
+        </div>
         <Link href="/clientes/add">
-          <button className={styles.addButton}>Add</button>
+          <button className={styles.addButton}>Registrar novo cliente</button>
         </Link>
       </div>
       <table className={styles.table}>
@@ -58,7 +106,7 @@ const ClientesPage = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((itemData) => (
+          {selectedData.map((itemData) => (
             <tr key={itemData.id}>
               <td className={styles.user}>
                 <Image
@@ -78,15 +126,17 @@ const ClientesPage = () => {
                     Ver
                   </button>
                 </Link>
-                  <button onClick={() => handleDelete(itemData.id)} className={`${styles.button} ${styles.delete}`}>
-                    Deletar
-                  </button>
+                <button
+                  onClick={() => handleDelete(itemData.id)}
+                  className={`${styles.button} ${styles.delete}`}
+                >
+                  Deletar
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <Pagination />
     </div>
   );
 };

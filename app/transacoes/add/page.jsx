@@ -1,25 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import styles from "../../ui/clientes/addCliente.module.css";
+import styles from "../../ui/transacoes/addTransacoes.module.css";
 import { useRouter } from "next/navigation";
-import {
-  addDoc,
-  collection,
-  onSnapshot,
-  serverTimestamp,
-} from "firebase/firestore";
+import { addDoc, collection, onSnapshot, serverTimestamp } from "firebase/firestore";
 import { db } from "@/app/firebase";
 
 const AddTransacaoPage = () => {
   const [data, setData] = useState({});
   const [clients, setClients] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [services, setServices] = useState([]);
 
   const [transaction, setTransaction] = useState("");
   const [client, setClient] = useState("");
-  const [product, setProduct] = useState("");
-  const [service, setService] = useState("");
   const [provider, setProvider] = useState("");
   const [source, setSource] = useState("");
   const [quantity, setQuantity] = useState();
@@ -27,6 +18,10 @@ const AddTransacaoPage = () => {
   const [originPrice, setOriginPrice] = useState();
   const [finalPrice, setFinalPrice] = useState();
   const [payload, setPayload] = useState();
+  const [status, setStatus] = useState("")
+  const [day, setDay] = useState("");
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
   const [observations, setObservations] = useState("");
 
   useEffect(() => {
@@ -38,46 +33,6 @@ const AddTransacaoPage = () => {
           list.push({ id: doc.id, ...doc.data() });
         });
         setClients(list);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-
-    return () => {
-      unsub();
-    };
-  }, []);
-
-  useEffect(() => {
-    const unsub = onSnapshot(
-      collection(db, "products"),
-      (snapShot) => {
-        let list = [];
-        snapShot.docs.forEach((doc) => {
-          list.push({ id: doc.id, ...doc.data() });
-        });
-        setProducts(list);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-
-    return () => {
-      unsub();
-    };
-  }, []);
-
-  useEffect(() => {
-    const unsub = onSnapshot(
-      collection(db, "services"),
-      (snapShot) => {
-        let list = [];
-        snapShot.docs.forEach((doc) => {
-          list.push({ id: doc.id, ...doc.data() });
-        });
-        setServices(list);
       },
       (error) => {
         console.log(error);
@@ -102,8 +57,6 @@ const AddTransacaoPage = () => {
         ...data,
         transaction,
         client,
-        product,
-        service,
         provider,
         source,
         quantity,
@@ -112,7 +65,9 @@ const AddTransacaoPage = () => {
         finalPrice,
         payload,
         observations,
+        status,
         timeStamp: serverTimestamp(),
+        timeStampString: day + "/" + month + "/" + year,
       });
       console.log("Document written with ID: ", docRef.id);
       // ---------------------------------------------------------------//
@@ -139,34 +94,10 @@ const AddTransacaoPage = () => {
           required
           onChange={(e) => setClient(e.target.value)}
         >
-          <option value="">informar o cliente:</option>
+          <option value="">nome do cliente:</option>
           {clients.map((item) => (
             <option key={item.id} value={item.client}>
               {item.client}
-            </option>
-          ))}
-        </select>
-        <select
-          name="product"
-          id="product"
-          onChange={(e) => setProduct(e.target.value)}
-        >
-          <option value="">informar o produto:</option>
-          {products.map((item) => (
-            <option key={item.id} value={item.product}>
-              {item.product}
-            </option>
-          ))}
-        </select>
-        <select
-          name="service"
-          id="service"
-          onChange={(e) => setService(e.target.value)}
-        >
-          <option value="">informar o serviço:</option>
-          {services.map((item) => (
-            <option key={item.id} value={item.service}>
-              {item.service}
             </option>
           ))}
         </select>
@@ -196,11 +127,13 @@ const AddTransacaoPage = () => {
           <option value="Epson WF-C5810 PIGMENTADA">
             Epson WF-C5810 PIGMENTADA
           </option>
+          <option value="Epson T3170 CORANTE">Epson T3170 CORANTE</option>
+          <option value="Epson T3170 PIGMENTADA">Epson T3170 PIGMENTADA</option>
         </select>
-        <div className={styles.component}>
+        <div className={styles.extraComponent01}>
           <input
             type="number"
-            step={0.1}
+            step={0.01}
             placeholder="quantidade:"
             name="quantity"
             autoComplete="off"
@@ -215,11 +148,11 @@ const AddTransacaoPage = () => {
           >
             <option value="">und. de medida:</option>
             <option value="mt²">mt²</option>
-            <option value="bloco">bloco</option>
-            <option value="resma">resma</option>
-            <option value="unidade">unidade</option>
-            <option value="cento">cento</option>
-            <option value="milheiro">milheiro</option>
+            <option value="bloc">bloco</option>
+            <option value="resm">resma</option>
+            <option value="unid">unidade</option>
+            <option value="cent">cento</option>
+            <option value="milh">milheiro</option>
             <option value="A1">A1</option>
             <option value="A2">A2</option>
             <option value="A3">A3</option>
@@ -254,6 +187,86 @@ const AddTransacaoPage = () => {
           required
           onChange={(e) => setPayload(parseFloat(e.target.value))}
         />
+        <select name="status" id="status" onChange={(e) => setStatus(e.target.value)}>
+          <option value="">status:</option>
+          <option value="pendente">pendente</option>
+          <option value="concluso">concluso</option>
+          <option value="cancelado">cancelado</option>
+        </select>
+        <div className={styles.extraComponent02}>
+          <select
+            onChange={(e) => setDay(e.target.value)}
+            name="day"
+            id="day"
+            required
+          >
+            <option value="">dia:</option>
+            <option value="01">01</option>
+            <option value="02">02</option>
+            <option value="03">03</option>
+            <option value="04">04</option>
+            <option value="05">05</option>
+            <option value="06">06</option>
+            <option value="07">07</option>
+            <option value="08">08</option>
+            <option value="09">09</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="16">16</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+            <option value="31">31</option>
+          </select>
+          <select
+            onChange={(e) => setMonth(e.target.value)}
+            name="day"
+            id="day"
+            required
+          >
+            <option value="">mês:</option>
+            <option value="01">01</option>
+            <option value="02">02</option>
+            <option value="03">03</option>
+            <option value="04">04</option>
+            <option value="05">05</option>
+            <option value="06">06</option>
+            <option value="07">07</option>
+            <option value="08">08</option>
+            <option value="09">09</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+          </select>
+          <select
+            onChange={(e) => setYear(e.target.value)}
+            name="day"
+            id="day"
+            required
+          >
+            <option value="">ano:</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+            <option value="2028">2028</option>
+          </select>
+        </div>
         <textarea
           name="observations"
           id="observations"

@@ -1,31 +1,65 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import styles from "../../ui/clientes/singleCliente.module.css";
-import Image from "next/image";
+import styles from "../../ui/transacoes/singleTransacao.module.css";
 import { useParams } from "next/navigation";
 import { useFetchDocument } from "@/app/hooks/useFetchDocument";
 import { useUpdateDocument } from "@/app/hooks/useUpdateDocument";
 import { useRouter } from "next/navigation";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "@/app/firebase";
 
-const SingleClientePage = () => {
+const SingleTransactionPage = () => {
   const { id } = useParams();
-  const { document, loading } = useFetchDocument("clients", id);
-  const { updateDocument, response } = useUpdateDocument("clients");
+  const { document, loading } = useFetchDocument("transactions", id);
+  const { updateDocument, response } = useUpdateDocument("transactions");
 
+  const [clients, setClients] = useState([]);
+
+  const [transaction, setTransaction] = useState("");
   const [client, setClient] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [img, setImg] = useState("");
+  const [provider, setProvider] = useState("");
+  const [source, setSource] = useState("");
+  const [quantity, setQuantity] = useState();
+  const [measurementeUnit, setMeasurementUnit] = useState("");
+  const [status, setStatus] = useState("");
+  const [originPrice, setOriginPrice] = useState();
+  const [finalPrice, setFinalPrice] = useState();
+  const [payload, setPayload] = useState();
+  const [observations, setObservations] = useState("");
+
+  useEffect(() => {
+    const unsub = onSnapshot(
+      collection(db, "clients"),
+      (snapShot) => {
+        let list = [];
+        snapShot.docs.forEach((doc) => {
+          list.push({ id: doc.id, ...doc.data() });
+        });
+        setClients(list);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    return () => {
+      unsub();
+    };
+  }, []);
 
   const router = useRouter();
 
   const data = {
+    transaction,
     client,
-    email,
-    phone,
-    address,
-    img,
+    provider,
+    source,
+    quantity,
+    measurementeUnit,
+    originPrice,
+    finalPrice,
+    payload,
+    observations,
   };
 
   const handleUpDate = async (e) => {
@@ -33,83 +67,160 @@ const SingleClientePage = () => {
 
     updateDocument(id, data);
 
-    router.push("/clientes");
+    router.push("/transacoes");
   };
 
   useEffect(() => {
     if (document) {
+      setTransaction(document.transaction);
       setClient(document.client);
-      setEmail(document.email);
-      setPhone(document.phone);
-      setAddress(document.address);
-      setImg(document.img);
+      setProvider(document.provider);
+      setSource(document.source);
+      setQuantity(document.quantity);
+      setMeasurementUnit(document.measurementeUnit);
+      setOriginPrice(document.originPrice);
+      setFinalPrice(document.finalPrice);
+      setPayload(document.payload);
+      setObservations(document.observations);
     }
   }, [document]);
 
-  console.log(document);
-
   return (
     <div className={styles.container}>
-      <div className={styles.infoContainer}>
-        <div className={styles.imgContainer}>
-          {document?.img ? (
-            <Image alt="" src={document.img} fill />
-          ) : (
-            <Image alt="" src="/noavatar.png" fill />
-          )}
-        </div>
-        {document?.client}
-      </div>
-      <div className={styles.formContainer}>
-        <form onSubmit={handleUpDate} className={styles.form}>
-          <label>Nome do usuário:</label>
-          <input
-            type="text"
-            placeholder="atualize o nome do cliente"
-            name="client"
-            required
-            autoComplete="off"
-            value={client}
-            onChange={(e) => setClient(e.target.value)}
-          />
-          <label>Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="atualize o email do cliente"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <label>Telefone:</label>
-          <input
-            type="phone"
-            placeholder="atualize o telefone do cliente"
-            name="phone"
-            autoComplete="off"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
-          <label>Endereço:</label>
-          <textarea
-            name="address"
-            id="address"
-            rows="8"
-            placeholder="endereço"
-            autoComplete="off"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          ></textarea>
-          <button
-            disabled={response === true || loading === true}
-            type="submit"
-          >
-            Atualizar cliente!
-          </button>
-        </form>
-      </div>
+      <form onSubmit={handleUpDate} className={styles.form}>
+        <input
+          type="text"
+          name="transaction"
+          required
+          autoComplete="off"
+          placeholder="nome da transação:"
+          value={transaction}
+          onChange={(e) => setTransaction(e.target.value)}
+        />
+        <select
+          name="client"
+          id="client"
+          value={client}
+          onChange={(e) => setClient(e.target.value)}
+        >
+          {clients.map((item) => (
+            <option key={item.id} value={item.client}>
+              {item.client}
+            </option>
+          ))}
+        </select>
+        <select
+          name="source"
+          id="source"
+          value={source}
+          onChange={(e) => setSource(e.target.value)}
+        >
+          <option value="">(selecione a máquina / equipamento):</option>
+          <option value="Outro">Outro</option>
+          <option value="Tercerizado(a)">Tercerizado(a)</option>
+          <option value="GoldCut JK Séries">GoldCut JK Séries</option>
+          <option value="Epson WF-C5810 CORANTE">Epson WF-C5810 CORANTE</option>
+          <option value="Epson WF-C5810 PIGMENTADA">
+            Epson WF-C5810 PIGMENTADA
+          </option>
+          <option value="Epson T3170 CORANTE">Epson T3170 CORANTE</option>
+          <option value="Epson T3170 PIGMENTADA">Epson T3170 PIGMENTADA</option>
+        </select>
+        <input
+          type="number"
+          placeholder="quantidade"
+          step={0.1}
+          name="quantity"
+          autoComplete="off"
+          required
+          value={quantity}
+          onChange={(e) => setQuantity(parseFloat(e.target.value))}
+        />
+        <select
+          onChange={(e) => setMeasurementUnit(e.target.value)}
+          name="measurementeUnit"
+          id="measurementeUnit"
+          required
+          value={measurementeUnit}
+        >
+          <option value="mt²">mt²</option>
+          <option value="bloc">bloco</option>
+          <option value="resm">resma</option>
+          <option value="unid">unidade</option>
+          <option value="cent">cento</option>
+          <option value="milh">milheiro</option>
+          <option value="A1">A1</option>
+          <option value="A2">A2</option>
+          <option value="A3">A3</option>
+          <option value="A4">A4</option>
+          <option value="A5">A5</option>
+        </select>
+        <select
+          name="provider"
+          id="provider"
+          value={provider}
+          onChange={(e) => setProvider(e.target.value)}
+        >
+          <option value="Outro">Outro</option>
+          <option value="Ideal Comunicação">Ideal Comunicação</option>
+          <option value="RD Gráfica">RD Gráfica</option>
+          <option value="Atual Card">Atual Card</option>
+        </select>
+        <select
+          onChange={(e) => setStatus(e.target.value)}
+          name="status"
+          id="status"
+          value={status}
+        >
+          <option value="pendente">pendente</option>
+          <option value="concluso">concluso</option>
+          <option value="cancelado">cancelado</option>
+        </select>
+        <input
+          type="number"
+          placeholder="Custo inicial R$:"
+          step={0.1}
+          name="originPrice"
+          autoComplete="off"
+          required
+          value={originPrice}
+          onChange={(e) => setOriginPrice(parseFloat(e.target.value))}
+        />
+        <input
+          type="number"
+          placeholder="valor final R$:"
+          step={0.1}
+          name="finalPrice"
+          autoComplete="off"
+          required
+          value={finalPrice}
+          onChange={(e) => setFinalPrice(parseFloat(e.target.value))}
+        />
+        <input
+          type="number"
+          placeholder="pagamento R$:"
+          step={0.1}
+          name="payload"
+          autoComplete="off"
+          required
+          value={payload}
+          onChange={(e) => setPayload(parseFloat(e.target.value))}
+        />
+        <textarea
+          name="observations"
+          id="observations"
+          placeholder="observações gerais:"
+          rows="8"
+          autoComplete="off"
+          value={observations}
+          onChange={(e) => setObservations(e.target.value)}
+        ></textarea>
+        <button disabled={response === true || loading === true} type="submit">
+          Atualizar informações da transação!
+        </button>
+      </form>
     </div>
   );
 };
 
-export default SingleClientePage;
+export default SingleTransactionPage;

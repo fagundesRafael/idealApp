@@ -90,6 +90,7 @@ const SingleClientePage = () => {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
+          
           <label>Endereço:</label>
           <textarea
             name="address"

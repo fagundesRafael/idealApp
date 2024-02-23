@@ -41,10 +41,6 @@
   cursor: pointer;
 }
 
-.file {
-  display: none;
-}
-
 .form label {
   cursor: pointer;
 }
@@ -59,4 +55,18 @@
   padding: 15px 100px;
   z-index: 1;
   color: var(--text);
+}
+
+.extraComponent01 {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 20px;
+}
+
+.extraComponent02 {
+  display: flex;
+  justify-content: space-between;
+  width: 45%;
+  column-gap: 20px;
+
 }

@@ -3,7 +3,6 @@ import styles from "./sidebar.module.css";
 import {
   MdDashboard,
   MdSupervisedUserCircle,
-  MdShoppingBag,
   MdAttachMoney,
   MdWork,
   MdAnalytics,
@@ -11,7 +10,6 @@ import {
   MdOutlineSettings,
   MdHelpCenter,
   MdLogout,
-  MdDesignServices,
 } from "react-icons/md";
 import MenuLink from "../menulink/menuLink";
 import Image from "next/image";
@@ -29,16 +27,6 @@ const menuItems = [
         title: "Clientes",
         path: "/clientes",
         icon: <MdSupervisedUserCircle />,
-      },
-      {
-        title: "Produtos",
-        path: "/produtos",
-        icon: <MdShoppingBag />,
-      },
-      {
-        title: "Serviços",
-        path: "/servicos",
-        icon: <MdDesignServices />,
       },
       {
         title: "Transações",
@@ -88,7 +76,13 @@ const Sidebar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.user}>
-        <Image className={styles.userImage} src="/logo_ideal_bgSoft.png" alt="" width={50} height={50} />
+        <Image
+          className={styles.userImage}
+          src="/logo_ideal_bgSoft.png"
+          alt=""
+          width={50}
+          height={50}
+        />
         <div className={styles.userDetail}>
           <span className={styles.userName}>Rafael Fagundes</span>
           <span className={styles.userTitle}>Administrador</span>
@@ -105,7 +99,7 @@ const Sidebar = () => {
         ))}
       </ul>
       <button className={styles.logout}>
-        <MdLogout/>
+        <MdLogout />
         sair
       </button>
     </div>
