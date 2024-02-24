@@ -56,6 +56,7 @@ const SingleTransactionPage = () => {
     source,
     quantity,
     measurementeUnit,
+    status,
     originPrice,
     finalPrice,
     payload,
@@ -78,6 +79,7 @@ const SingleTransactionPage = () => {
       setSource(document.source);
       setQuantity(document.quantity);
       setMeasurementUnit(document.measurementeUnit);
+      setStatus(document.status)
       setOriginPrice(document.originPrice);
       setFinalPrice(document.finalPrice);
       setPayload(document.payload);

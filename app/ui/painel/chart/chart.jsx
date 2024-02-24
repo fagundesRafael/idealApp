@@ -229,7 +229,7 @@ const Chart = () => {
             type="monotone"
             dataKey="lucro"
             stroke="#82ca9d"
-            strokeDasharray="3 4 5 2"
+            strokeDasharray="0"
           />
         </LineChart>
       </ResponsiveContainer>
