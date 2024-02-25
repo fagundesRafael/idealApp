@@ -26,8 +26,7 @@ const ClientesPage = async ({ searchParams }) => {
             <td>Nome</td>
             <td>Email</td>
             <td>Telefone</td>
-            <td>Transações</td>
-            <td>Pendências</td>
+            <td>Endereço</td>
             <td>Ações</td>
           </tr>
         </thead>
@@ -43,26 +42,27 @@ const ClientesPage = async ({ searchParams }) => {
                     width={40}
                     height={40}
                   />
-                  {client.name}
+                  {client.clientName}
                 </div>
               </td>
               <td>{client.email}</td>
               <td>{client.phone}</td>
-              <td></td>
-              <td>nenhuma</td>
-              <div className={styles.buttons}>
-                <Link href={`/clientes/${client.id}`}>
-                  <button className={`${styles.button} ${styles.view}`}>
-                    Ver
-                  </button>
-                </Link>
-                <form action={deleteClient}>
-                  <input type="hidden" name="id" value={client.id} />
-                  <button className={`${styles.button} ${styles.delete}`}>
-                    Deletar
-                  </button>
-                </form>
-              </div>
+              <td>{client.address}</td>
+              <td>
+                <div className={styles.buttons}>
+                  <Link href={`/clientes/${client.id}`}>
+                    <button className={`${styles.button} ${styles.view}`}>
+                      Ver
+                    </button>
+                  </Link>
+                  <form action={deleteClient}>
+                    <input type="hidden" name="id" value={client.id} />
+                    <button className={`${styles.button} ${styles.delete}`}>
+                      Deletar
+                    </button>
+                  </form>
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>

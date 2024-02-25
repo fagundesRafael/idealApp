@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    username: {
+    userName: {
       type: String,
       required: true,
       unique: true,
@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema(
 
 const clientSchema = new mongoose.Schema(
   {
-    name: {
+    clientName: {
       type: String,
       required: true,
       unique: true,
@@ -42,8 +42,6 @@ const clientSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: true,
-      unique: true,
     },
     phone: {
       type: String,
@@ -59,39 +57,54 @@ const clientSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const productSchema = new mongoose.Schema(
+const transactionSchema = new mongoose.Schema(
   {
-    title: {
+    transactionName: {
       type: String,
       required: true,
-      unique: true,
       min: 3,
       max: 20,
     },
-    unidType: {
+    clientName: {
       type: String,
       required: true,
-      unique: true,
     },
-    originPrice: {
+    provider: {
+      type: String,
+      required: true,
+    },
+    source: {
+      type: String,
+      required: true,
+    },
+    quantity: {
       type: Number,
       required: true,
       min: 0,
     },
-    orderPrice: {
-      type: Number,
-      required: true,
-      min: 0,
-    },
-    stock: {
-      type: Number,
-      required: true,
-      min: 0,
-    },
-    materialType: {
+    measurementUnit: {
       type: String,
     },
-    productImage: {
+    cost: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    price: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    downPayment: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    orderStatus: {
+      type: String,
+      required: true,
+    },
+    notations: {
       type: String,
     },
   },
@@ -101,5 +114,6 @@ const productSchema = new mongoose.Schema(
 export const User = mongoose.models.User || mongoose.model("User", userSchema);
 export const Client =
   mongoose.models.Client || mongoose.model("Client", clientSchema);
-export const Product =
-  mongoose.models.Product || mongoose.model("Product", productSchema);
+export const Transaction =
+  mongoose.models.Transaction ||
+  mongoose.model("Transaction", transactionSchema);

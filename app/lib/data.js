@@ -1,4 +1,4 @@
-import { Client, Product } from "./models";
+import { User, Client, Transaction } from "./models";
 import { connectToDB } from "./utils";
 
 export const fetchClients = async (q, page) => {
@@ -8,8 +8,8 @@ export const fetchClients = async (q, page) => {
 
   try {
     connectToDB();
-    const count = await Client.find({ name: { $regex: regex } }).count()
-    const clients = await Client.find({ name: { $regex: regex } }).limit(ITEM_PER_PAGE).skip(ITEM_PER_PAGE * (page -1));
+    const count = await Client.find({ clientName: { $regex: regex } }).count()
+    const clients = await Client.find({ clientName: { $regex: regex } }).limit(ITEM_PER_PAGE).skip(ITEM_PER_PAGE * (page -1));
     return {count, clients};
   } catch (err) {
     console.log(err);
@@ -29,30 +29,30 @@ export const fetchClient = async (id) => {
   }
 };
 
-export const fetchProducts = async (q, page) => {
+export const fetchTransactions = async (q, page) => {
   const regex = new RegExp(q, "i");
 
   const ITEM_PER_PAGE = 5
 
   try {
     connectToDB();
-    const count = await Product.find({ title: { $regex: regex } }).count()
-    const products = await Product.find({ title: { $regex: regex } }).limit(ITEM_PER_PAGE).skip(ITEM_PER_PAGE * (page -1));
-    return {count, products};
+    const count = await Transaction.find({ transactionName: { $regex: regex } }).count()
+    const transactions = await Transaction.find({ transactionName: { $regex: regex } }).limit(ITEM_PER_PAGE).skip(ITEM_PER_PAGE * (page -1));
+    return {count, transactions};
   } catch (err) {
     console.log(err);
-    throw new Error("Failed to fetch products!");
+    throw new Error("Failed to fetch transactions!");
   }
 };
 
-export const fetchProduct = async (id) => {
+export const fetchTransaction = async (id) => {
 
   try {
     connectToDB();
-    const product = await Product.findById(id)
-    return product
+    const transaction = await Transaction.findById(id)
+    return transaction
   } catch (err) {
     console.log(err);
-    throw new Error("Failed to fetch product!");
+    throw new Error("Failed to fetch transaction!");
   }
 };

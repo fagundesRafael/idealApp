@@ -13,14 +13,14 @@ const SingleClientePage = async ({params}) => {
         <div className={styles.imgContainer}>
           <Image alt="" src={client.clientImage || "/noavatar.png"} fill />
         </div>
-        {client.name}
+        {client.clientName}
       </div>
       <div className={styles.formContainer}>
         <form action={updateClient} className={styles.form}>
           <input type="hidden" name="id" value={client.id} />
           <label>Nome do usuário:</label>
-          <input type="text" name="username" placeholder={client.name} />
-          <label>Email</label>
+          <input type="text" name="clientName" placeholder={client.clientName} />
+          <label>Email:</label>
           <input type="email" name="email" placeholder={client.email} />
           <label>Telefone:</label>
           <input type="number" name="phone" placeholder={client.phone} />

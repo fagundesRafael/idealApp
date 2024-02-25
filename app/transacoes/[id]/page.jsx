@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../ui/produtos/singleProduto.module.css";
+import styles from "../../ui/transacoes/singleTransaction.module.css";
 import Image from "next/image";
 import { fetchProduct } from "@/app/lib/data";
 import { updateProduct } from "@/app/lib/actions";

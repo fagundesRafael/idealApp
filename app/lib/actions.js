@@ -1,9 +1,9 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import { Client, Product, User } from "./models";
+import { Client, Transaction, User } from "./models";
 import { connectToDB } from "./utils";
 import { redirect } from "next/navigation";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
 
 export const addUser = async (formData) => {
   //   const name = formData.get("name");
@@ -16,8 +16,8 @@ export const addUser = async (formData) => {
 
   try {
     connectToDB();
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(password, salt)
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
     const newUser = new User({
       name,
       email,
@@ -37,13 +37,13 @@ export const addUser = async (formData) => {
 };
 
 export const addClient = async (formData) => {
-  const { name, email, phone, clientImage, address } =
+  const { clientName, email, phone, clientImage, address } =
     Object.fromEntries(formData);
 
   try {
     connectToDB();
     const newClient = new Client({
-      name,
+      clientName,
       email,
       phone,
       clientImage,
@@ -61,13 +61,13 @@ export const addClient = async (formData) => {
 };
 
 export const updateClient = async (formData) => {
-  const { id, name, email, phone, clientImage, address } =
+  const { id, clientName, email, phone, clientImage, address } =
     Object.fromEntries(formData);
 
   try {
     connectToDB();
     const updateFields = {
-      name,
+      clientName,
       email,
       phone,
       clientImage,
@@ -89,53 +89,77 @@ export const updateClient = async (formData) => {
   redirect("/clientes");
 };
 
-export const addProduct = async (formData) => {
+export const addTransaction = async (formData) => {
   const {
-    title,
-    unidType,
-    originPrice,
-    orderPrice,
-    stock,
-    materialType,
-    productImage,
+    transactionName,
+    clientName,
+    provider,
+    source,
+    quantity,
+    measurementUnit,
+    cost,
+    price,
+    downPayment,
+    orderStatus,
+    notations,
   } = Object.fromEntries(formData);
 
   try {
     connectToDB();
-    const newProduct = new Product({
-      title,
-      unidType,
-      originPrice,
-      orderPrice,
-      stock,
-      materialType,
-      productImage,
+    const newTransaction = new Transaction({
+      transactionName,
+      clientName,
+      provider,
+      source,
+      quantity,
+      measurementUnit,
+      cost,
+      price,
+      downPayment,
+      orderStatus,
+      notations,
     });
 
-    await newProduct.save();
+    await newTransaction.save();
   } catch (error) {
     console.log(error);
-    throw new Error("Failed to register a new product!");
+    throw new Error("Failed to register a new transaction!");
   }
 
-  revalidatePath("/produtos");
-  redirect("/produtos");
+  revalidatePath("/transacoes");
+  redirect("/transacoes");
 };
 
-export const updateProduct = async (formData) => {
-  const { id, title, unidType, originPrice, orderPrice, stock, materialType, productImage } =
-    Object.fromEntries(formData);
+export const updateTransaction = async (formData) => {
+  const {
+    id,
+    transactionName,
+    clientName,
+    provider,
+    source,
+    quantity,
+    measurementUnit,
+    cost,
+    price,
+    downPayment,
+    orderStatus,
+    notations,
+  } = Object.fromEntries(formData);
 
   try {
     connectToDB();
     const updateFields = {
-      title,
-      unidType,
-      originPrice,
-      orderPrice,
-      stock,
-      materialType,
-      productImage
+      transactionName,
+      clientName,
+      provider,
+      source,
+      quantity,
+      measurementUnit,
+      cost,
+      price,
+      downPayment,
+      orderStatus,
+      notations,
     };
 
     Object.keys(updateFields).forEach(
@@ -143,7 +167,7 @@ export const updateProduct = async (formData) => {
         (updateFields[key] === "" || undefined) && delete updateFields[key]
     );
 
-    await Product.findByIdAndUpdate(id, updateFields);
+    await Transaction.findByIdAndUpdate(id, updateFields);
   } catch (error) {
     console.log(error);
     throw new Error("Failed to update product!");
@@ -168,17 +192,17 @@ export const deleteClient = async (formData) => {
   revalidatePath("/clientes");
 };
 
-export const deleteProduct = async (formData) => {
+export const deleteTransaction = async (formData) => {
   const { id } = Object.fromEntries(formData);
 
   try {
     connectToDB();
 
-    await Product.findByIdAndDelete(id);
+    await Transaction.findByIdAndDelete(id);
   } catch (error) {
     console.log(error);
     throw new Error("Failed to delete a product!");
   }
 
-  revalidatePath("/produtos");
+  revalidatePath("/transacoes");
 };

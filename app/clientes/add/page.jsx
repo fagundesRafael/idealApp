@@ -6,7 +6,7 @@ const AddClientePage = () => {
   return (
     <div className={styles.container}>
       <form action={addClient} className={styles.form}>
-        <input type="text" placeholder="nome" name="name" required />
+        <input type="text" placeholder="nome" name="clientName" required />
         <input type="email" placeholder="email" name="email" />
         <input type="text" placeholder="telefone" name="phone" />
         <input type="text" placeholder="imagem (URL)" id="clientImage" name="clientImage" />
