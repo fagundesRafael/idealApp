@@ -16,7 +16,7 @@ const AddClientePage = () => {
           rows="8"
           placeholder="endereço"
         ></textarea>
-        <button>Submit</button>
+        <button type="submit" >Registrar novo cliente</button>
       </form>
     </div>
   );

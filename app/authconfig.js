@@ -3,17 +3,28 @@ export const authConfig = {
   pages: {
     signIn: "/login",
   },
-  callback: {
+  callbacks: {
     authorized({ auth, request }) {
       const isLoggedIn = auth?.user;
-      const isOnPainel = request.nextUrl.pathname.startsWith("/painel");
-      if (isOnPainel) {
-        if (isLoggedIn) return true;
-        return false;
-      } else if (isLoggedIn) {
+      const isOffline = !isLoggedIn;
+
+      if (isOffline) {
+        const isTryingToAccessLogin = request.nextUrl.pathname === "/login";
+        return isTryingToAccessLogin;
+      }
+
+      if (isLoggedIn && request.nextUrl.pathname === "/login") {
         return Response.redirect(new URL("/painel", request.nextUrl));
       }
-      return true
+
+      const isOnAllowedPages = [
+        "/painel",
+        "/transacoes",
+        "/clientes",
+        "/usuarios",
+      ].some((allowedPage) => request.nextUrl.pathname.startsWith(allowedPage));
+
+      return isOnAllowedPages;
     },
   },
 };

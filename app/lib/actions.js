@@ -4,36 +4,36 @@ import { Client, Transaction, User } from "./models";
 import { connectToDB } from "./utils";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
+import { signIn } from "../auth";
 
 export const addUser = async (formData) => {
-  //   const name = formData.get("name");
-  //   const email = formData.get("email");
-  //   const phone = formData.get("phone");
-  //   const clientImage = formData.get("clientImage");
-  //   const address = formData.get("address");
-  const { name, email, password, phone, isAdmin } =
+  const { username, email, password, phone, address, isAdmin, isActive } =
     Object.fromEntries(formData);
 
   try {
     connectToDB();
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
+
     const newUser = new User({
-      name,
+      username,
       email,
       password: hashedPassword,
       phone,
+      address,
       isAdmin,
+      isActive,
     });
 
     await newUser.save();
-  } catch (error) {
-    console.log(error);
-    throw new Error("Failed to register a new user!");
+  } catch (err) {
+    console.log(err);
+    throw new Error("Failed to create user!");
   }
 
-  revalidatePath("/team");
-  redirect("/team");
+  revalidatePath("/usuarios");
+  redirect("/usuarios");
 };
 
 export const addClient = async (formData) => {
@@ -205,4 +205,17 @@ export const deleteTransaction = async (formData) => {
   }
 
   revalidatePath("/transacoes");
+};
+
+export const authenticate = async (prevState, formData) => {
+  const { username, password } = Object.fromEntries(formData);
+
+  try {
+    await signIn("credentials", { username, password });
+  } catch (err) {
+    if (err.message.includes("CredentialsSignin")) {
+      return "Credenciais erradas!";
+    }
+    throw err;
+  }
 };

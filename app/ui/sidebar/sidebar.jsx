@@ -3,7 +3,6 @@ import styles from "./sidebar.module.css";
 import {
   MdDashboard,
   MdSupervisedUserCircle,
-  MdShoppingBag,
   MdAttachMoney,
   MdWork,
   MdAnalytics,
@@ -11,9 +10,11 @@ import {
   MdOutlineSettings,
   MdHelpCenter,
   MdLogout,
+  MdSupervisorAccount,
 } from "react-icons/md";
 import MenuLink from "../menulink/menuLink";
 import Image from "next/image";
+import { auth, signOut } from "@/app/auth";
 
 const menuItems = [
   {
@@ -23,6 +24,11 @@ const menuItems = [
         title: "Painel",
         path: "/painel",
         icon: <MdDashboard />,
+      },
+      {
+        title: "Usuários",
+        path: "/usuarios",
+        icon: <MdSupervisorAccount />,
       },
       {
         title: "Clientes",
@@ -73,13 +79,16 @@ const menuItems = [
   },
 ];
 
-const Sidebar = () => {
+const Sidebar = async () => {
+
+  const {user} = await auth()
+
   return (
     <div className={styles.container}>
       <div className={styles.user}>
         <Image className={styles.userImage} src="/logo_ideal_bgSoft.png" alt="" width={50} height={50} />
         <div className={styles.userDetail}>
-          <span className={styles.userName}>Rafael Fagundes</span>
+          <span className={styles.userName}>{user.username}</span>
           <span className={styles.userTitle}>Administrador</span>
         </div>
       </div>
@@ -93,10 +102,16 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
+      <form action={async () => {
+        "use server"
+        await signOut()
+      }}>
+
       <button className={styles.logout}>
         <MdLogout/>
         sair
       </button>
+      </form>
     </div>
   );
 };
