@@ -1,4 +1,4 @@
-import { User, Client, Transaction } from "./models";
+import { Client, Transaction } from "./models";
 import { connectToDB } from "./utils";
 
 export const fetchClients = async (q, page) => {
