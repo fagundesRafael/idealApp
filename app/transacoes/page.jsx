@@ -1,13 +1,12 @@
 import React from "react";
 import styles from "../ui/transacoes/transactions.module.css";
 import Link from "next/link";
-import Image from "next/image";
 import Search from "../ui/search/search";
 import Pagination from "../ui/pagination/pagination";
 import { fetchTransactions } from "../lib/data";
 import { deleteTransaction } from "../lib/actions";
 
-const ProductsPage = async ({searchParams}) => {
+const ProductsPage = async ({ searchParams }) => {
   const q = searchParams?.q || "";
   const page = searchParams?.page || 1;
   const { count, transactions } = await fetchTransactions(q, page);
@@ -15,7 +14,7 @@ const ProductsPage = async ({searchParams}) => {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <Search placeholder="Search for a product..." />
+        <Search placeholder="Pesquisar transação..." />
         <Link href="/transacoes/add">
           <button className={styles.addButton}>Adicionar nova transação</button>
         </Link>
@@ -23,12 +22,12 @@ const ProductsPage = async ({searchParams}) => {
       <table className={styles.table}>
         <thead>
           <tr>
-          <td>Transação</td>
+            <td>Transação</td>
             <td>Cliente</td>
-            <td>Quantidade</td>
-            <td>Valor R$</td>
-            <td>Lucro R$</td>
-            <td>Liquidez</td>
+            <td>Qtd</td>
+            <td>Valor</td>
+            <td>Lucro</td>
+            <td>Resumo</td>
             <td>Status</td>
             <td>Ações</td>
           </tr>
@@ -37,34 +36,41 @@ const ProductsPage = async ({searchParams}) => {
           {transactions.map((transaction) => (
             <tr key={transaction.id}>
               <td>
-                <div className={styles.product}>
-                  <Image
-                    className={styles.transactionImage}
-                    src={transaction.transactionImage || "/noproduct.jpg"}
-                    alt=""
-                    width={40}
-                    height={40}
-                  />
-                  {transaction.transactionName}
+                  {transaction?.transactionName.slice(0, 22)}
+              </td>
+              <td>{transaction?.clientName.slice(0, 16)}</td>
+              <td>{`${transaction.quantity} ${transaction.measurementUnit}`}</td>
+              <td>R$ {transaction.price}</td>
+              <td>R$ {(transaction.downPayment - transaction.cost).toString().slice(0, 5)}</td>
+              {transaction?.downPayment < transaction.cost ? (
+                <td className={styles.negative}>negativo</td>
+              ) : (
+                <td className={styles.positive}>positivo</td>
+              )}
+              {transaction?.orderStatus === "concluso" && (
+                <td className={styles.done}>{transaction.orderStatus}</td>
+              )}
+              {transaction?.orderStatus === "pendente" && (
+                <td className={styles.pending}>{transaction.orderStatus}</td>
+              )}
+              {transaction?.orderStatus === "cancelado" && (
+                <td className={styles.cancelled}>{transaction.orderStatus}</td>
+              )}
+              <td>
+                <div className={styles.buttons}>
+                  <Link href={`/transacoes/${transaction.id}`}>
+                    <button className={`${styles.button} ${styles.view}`}>
+                      Ver
+                    </button>
+                  </Link>
+                  <form action={deleteTransaction}>
+                    <input type="hidden" name="id" value={transaction.id} />
+                    <button className={`${styles.button} ${styles.delete}`}>
+                      Deletar
+                    </button>
+                  </form>
                 </div>
               </td>
-              <td>{transaction.clientName}</td>
-              <td>{transaction.quantity}</td>
-              <td>{transaction.price}</td>
-              <td>{transaction.downPayment - transaction.cost}</td>
-              <div className={styles.buttons}>
-                <Link href={`/transacoes/${transaction.id}`}>
-                  <button className={`${styles.button} ${styles.view}`}>
-                    Ver
-                  </button>
-                </Link>
-                <form action={deleteTransaction}>
-                  <input type="hidden" name="id" value={transaction.id} />
-                  <button className={`${styles.button} ${styles.delete}`}>
-                    Deletar
-                  </button>
-                  </form>
-              </div>
             </tr>
           ))}
         </tbody>

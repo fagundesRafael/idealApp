@@ -1,70 +1,104 @@
 import React from "react";
 import styles from "../../ui/transacoes/singleTransaction.module.css";
-import Image from "next/image";
-import { fetchProduct } from "@/app/lib/data";
-import { updateProduct } from "@/app/lib/actions";
+import { fetchClients, fetchTransaction } from "@/app/lib/data";
+import { updateTransaction } from "@/app/lib/actions";
 
 const SingleProductPage = async ({ params }) => {
   const { id } = params;
-  const product = await fetchProduct(id);
+  const transaction = await fetchTransaction(id);
+  const { clients } = await fetchClients();
+
   return (
     <div className={styles.container}>
-      <div className={styles.infoContainer}>
-        <div className={styles.imgContainer}>
-          <Image alt="" src={product.productImage || "/noavatar.png"} fill />
-        </div>
-        {product.title}
-      </div>
-      <div className={styles.formContainer}>
-        <form action={updateProduct} className={styles.form}>
-          <input type="hidden" name="id" value={product.id} />
-          <label>Title</label>
-          <input type="text" name="title" placeholder={product.title} />
-          <label>Unidade de Medida</label>
-          <select name="unidType" id="unidType" required>
-            <option value="" required>
-              unidade de medida
-            </option>
-            <option value="unidade">unidade</option>
-            <option value="mt²">mt²</option>
-            <option value="peso">Kg</option>
-          </select>
-          <label>Preço de origem R$:</label>
+      <div className={styles.form}>
+        <form action={updateTransaction} className={styles.form}>
+          <input type="hidden" name="id" value={transaction.id} />
           <input
-            type="number"
-            name="originPrice"
-            placeholder={product.originPrice}
-          />
-          <label>Preço atual R$:</label>
-          <input
-            type="number"
-            name="orderPrice"
-            placeholder={product.orderPrice}
-          />
-          <label>Estoque {product.unidType}</label>
-          <input type="number" name="stock" placeholder={product.stock} />
-          <label>Material</label>
-          <select name="materialType" id="materialType" required>
-            <option value="">tipo do material</option>
-            <option value="adesivo comum">adesivo comum</option>
-            <option value="adesivo recortado">adesivo recortado</option>
-            <option value="adesivo perfurado">adesivo perfurado</option>
-            <option value="lona">lona</option>
-            <option value="pvc">pvc</option>
-          </select>
-          <label>Imagem (URL)</label>
-          <input
-            type="text"
-            placeholder={product.productImage}
-            id="productImage"
-            name="productImage"
-          />
-          <textarea
-            name="desc"
-            id="desc"
-            rows="8"
-            placeholder="descrição"
-          ></textarea>
+          type="text"
+          defaultValue={transaction.transactionName}
+          placeholder="título da transação:"
+          name="transactionName"
+          required
+         />
+          <select name="clientName" id="clientName" defaultValue={transaction.clientName}>
+        {clients.map(client => (
+          <option key={client.id} value={client.clientName}>{client.clientName}</option>
+          ))}
+        </select>
+        <select name="provider" id="provider" defaultValue={transaction.provider} >
+          <option value="Ideal Comunicação">Ideal Comunicação</option>
+          <option value="RD Gráfica">RD Gráfica</option>
+          <option value="Atual Card">Atual Card</option>
+          <option value="Outro">Outro</option>
+        </select>
+        <select name="source" id="source" defaultValue={transaction.source} >
+          <option value="Tercerizado(a)">Tercerizado(a)</option>
+          <option value="GoldCut JK Séries">GoldCut JK Séries</option>
+          <option value="Epson WF-C5810 CORANTE">Epson WF-C5810 CORANTE</option>
+          <option value="Epson WF-C5810 PIGMENTADA">
+            Epson WF-C5810 PIGMENTADA
+          </option>
+          <option value="Epson T3170 CORANTE">Epson T3170 CORANTE</option>
+          <option value="Epson T3170 PIGMENTADA">Epson T3170 PIGMENTADA</option>
+          <option value="Outro">Outro</option>
+        </select>
+        <input
+          type="number"
+          step={0.01}
+          defaultValue={transaction.quantity}
+          placeholder="quantidade:"
+          name="quantity"
+          autoComplete="off"
+          required
+        />
+        <select name="measurementUnit" id="measurementUnit" defaultValue={transaction.measurementUnit}>
+          <option value="mt²">mt²</option>
+          <option value="unid">unidade</option>
+          <option value="cent">cento</option>
+          <option value="milh">milheiro</option>
+          <option value="fls">folha</option>
+          <option value="blc">bloco</option>
+        </select>
+        <input
+          type="number"
+          step={0.1}
+          placeholder="custo inicial R$:"
+          defaultValue={transaction.cost}
+          name="cost"
+          autoComplete="off"
+          required
+        />
+        <input
+          type="number"
+          step={0.1}
+          placeholder="valor final R$:"
+          defaultValue={transaction.price}
+          name="price"
+          autoComplete="off"
+          required
+        />
+        <input
+          type="number"
+          step={0.1}
+          placeholder="valor pago R$:"
+          defaultValue={transaction.downPayment}
+          name="downPayment"
+          autoComplete="off"
+          required
+        />
+        <select name="orderStatus" id="orderStatus" defaultValue={transaction.orderStatus}>
+          <option value="">status do pedido:</option>
+          <option value="pendente">pendente</option>
+          <option value="concluso">concluso</option>
+          <option value="cancelado">cancelado</option>
+        </select>
+        <textarea
+          name="notations"
+          id="notations"
+          rows="8"
+          placeholder="observações gerais (se necessário):"
+          defaultValue={transaction.notations}
+        ></textarea>
           <button>Atualizar</button>
         </form>
       </div>

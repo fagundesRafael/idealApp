@@ -170,11 +170,11 @@ export const updateTransaction = async (formData) => {
     await Transaction.findByIdAndUpdate(id, updateFields);
   } catch (error) {
     console.log(error);
-    throw new Error("Failed to update product!");
+    throw new Error("Failed to update transaction!");
   }
 
-  revalidatePath("/produtos");
-  redirect("/produtos");
+  revalidatePath("/transacoes");
+  redirect("/transacoes");
 };
 
 export const deleteClient = async (formData) => {
@@ -201,7 +201,7 @@ export const deleteTransaction = async (formData) => {
     await Transaction.findByIdAndDelete(id);
   } catch (error) {
     console.log(error);
-    throw new Error("Failed to delete a product!");
+    throw new Error("Failed to delete a transaction!");
   }
 
   revalidatePath("/transacoes");

@@ -4,9 +4,9 @@ import Image from "next/image";
 import { fetchClient } from "@/app/lib/data";
 import { updateClient } from "@/app/lib/actions";
 
-const SingleClientePage = async ({params}) => {
-  const { id } = params
-  const client = await fetchClient(id)
+const SingleClientePage = async ({ params }) => {
+  const { id } = params;
+  const client = await fetchClient(id);
   return (
     <div className={styles.container}>
       <div className={styles.infoContainer}>
@@ -19,15 +19,35 @@ const SingleClientePage = async ({params}) => {
         <form action={updateClient} className={styles.form}>
           <input type="hidden" name="id" value={client.id} />
           <label>Nome do usuário:</label>
-          <input type="text" name="clientName" placeholder={client.clientName} />
+          <input
+            defaultValue={client.clientName}
+            type="text"
+            name="clientName"
+            placeholder="nome do(a) cliente:"
+          />
           <label>Email:</label>
-          <input type="email" name="email" placeholder={client.email} />
+          <input
+            defaultValue={client.email}
+            type="email"
+            name="email"
+            placeholder="email do(a) cliente:"
+          />
           <label>Telefone:</label>
-          <input type="number" name="phone" placeholder={client.phone} />
+          <input
+            defaultValue={client.phone}
+            type="number"
+            name="phone"
+            placeholder="telefone do(a) cliente:"
+          />
           <label>Imagem (URL):</label>
-          <input type="string" name="clientImage" placeholder={client.clientImage} />
+          <input
+            defaultValue={client.clientImage}
+            type="string"
+            name="clientImage"
+            placeholder="imagem URL do(a) cliente:"
+          />
           <label>Endereço:</label>
-          <textarea type="text" name="address" placeholder={client.address} />
+          <textarea type="text" name="address" defaultValue={client.address} placeholder="endereço do(a) cliente:" />
           <button>Atualizar</button>
         </form>
       </div>

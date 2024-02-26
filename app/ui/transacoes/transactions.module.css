@@ -24,6 +24,15 @@
   width: 100%;
 }
 
+.table thead {
+  background-color: var(--bg);
+}
+
+.table thead tr td {
+  font-weight: bolder;
+
+}
+
 .table td {
   padding: 10px;
 }
@@ -66,3 +75,29 @@
 .delete {
   background-color: crimson;
 }
+
+.positive {
+  color: green;
+  font-weight: bolder;
+}
+
+.negative {
+  color:crimson;
+  font-weight: bolder;
+}
+
+.done {
+  color: greenyellow;
+  font-weight: bolder;
+}
+
+.pending {
+  color: rgb(255, 225, 89);
+  font-weight: bolder;
+}
+
+.cancelled {
+  color: red;
+  font-weight: bolder;
+}
+
