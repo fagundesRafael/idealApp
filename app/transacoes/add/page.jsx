@@ -1,10 +1,10 @@
 import React from "react";
 import styles from "../../ui/transacoes/addTransaction.module.css";
 import { addTransaction } from "@/app/lib/actions";
-import { fetchClients } from "@/app/lib/data";
+import { fetchAllClients } from "@/app/lib/data";
 
 const AddTransactionPage = async () => {
-  const { clients } = await fetchClients();
+  const { clients } = await fetchAllClients();
 
   return (
     <div className={styles.container}>

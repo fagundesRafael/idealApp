@@ -35,19 +35,19 @@ const ClientesPage = async ({ searchParams }) => {
             <tr key={client.id}>
               <td>
                 <div className={styles.client}>
-                  <Image
-                    className={styles.clientImage}
-                    src={client.clientImage || "/noavatar.png"}
-                    alt=""
-                    width={40}
-                    height={40}
-                  />
-                  {client.clientName}
+                <Image
+                  className={styles.clientImage}
+                  src={client.img || "/noavatar.png"}
+                  alt=""
+                  width={40}
+                  height={40}
+                />
+                  {client.clientName.slice(0, 16)}
                 </div>
               </td>
               <td>{client.email}</td>
               <td>{client.phone}</td>
-              <td>{client.address}</td>
+              <td>{client.address.slice(0, 22)}</td>
               <td>
                 <div className={styles.buttons}>
                   <Link href={`/clientes/${client.id}`}>

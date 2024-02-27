@@ -35,7 +35,7 @@ const SingleClientePage = async ({ params }) => {
           <label>Telefone:</label>
           <input
             defaultValue={client.phone}
-            type="number"
+            type="string"
             name="phone"
             placeholder="telefone do(a) cliente:"
           />

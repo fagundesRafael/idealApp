@@ -3,13 +3,14 @@ import styles from "../../ui/clientes/addCliente.module.css";
 import { addClient } from "@/app/lib/actions";
 
 const AddClientePage = () => {
+
   return (
     <div className={styles.container}>
       <form action={addClient} className={styles.form}>
         <input type="text" placeholder="nome" name="clientName" required />
         <input type="email" placeholder="email" name="email" />
         <input type="text" placeholder="telefone" name="phone" />
-        <input type="text" placeholder="imagem (URL)" id="clientImage" name="clientImage" />
+        <input type="text" placeholder="imagem URL (em breve upload) " id="clientImage" name="clientImage" />
         <textarea
           name="address"
           id="address"

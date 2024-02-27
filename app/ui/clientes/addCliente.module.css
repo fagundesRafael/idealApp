@@ -13,7 +13,8 @@
 
 .form input,
 .form textarea,
-.form select {
+.form select,
+.uploader {
   padding: 30px;
   background-color: var(--bg);
   color: var(--text);
@@ -22,32 +23,18 @@
   margin-bottom: 30px;
 }
 
-.form label {
-  padding: 30px;
-  background-color: var(--bg);
-  color: var(--text);
-  border: 2px solid #2e374a;
-  border-radius: 5px;
-  margin-bottom: 30px;
-  width: 45%;
-  font-size: 14px;
-  font-weight: 100;
-  cursor: pointer;
-}
-
-.form label i {
-  font-size: 200px;
-}
-
-.form input, .form select {
+.form input,
+.form select,
+.uploader,
+.uploader {
   width: 45%;
 }
 
-.form textarea{
+.form textarea {
   width: 100%;
 }
 
-.form button{
+.form button {
   width: 100%;
   padding: 30px;
   background-color: teal;
