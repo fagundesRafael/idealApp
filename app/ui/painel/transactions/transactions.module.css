@@ -1,50 +1,66 @@
 .container {
-    background-color: var(--bgSoft);
-    padding: 20px;
-    border-radius: 10px;
+  background-color: var(--bgSoft);
+  padding: 20px;
+  border-radius: 10px;
 }
 
 .title {
-    margin-bottom: 20px;
-    font-weight: 200;
-    color: var(--textSoft);
+  margin-bottom: 20px;
+  font-weight: 200;
+  color: var(--textSoft);
 }
 
 .table {
-    width: 100%;
+  width: 100%;
 }
 
-.table td{
-    padding: 10px;
+.table thead {
+  background-color: var(--bg);
 }
 
-.user {
-    display: flex;
-    gap: 10px;
-    align-items: center;
+.table thead tr td {
+  font-weight: bolder;
+}
+
+.table td {
+  padding: 10px;
+}
+
+.transaction {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 .userImage {
-    object-fit: cover;
-    border-radius: 50%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
-.status {
-    border-radius: 5px;
-    padding: 5px;
-    font-size: 14px;
-    color: white;
+.orderStatus {
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 14px;
+  color: white;
 }
 
-.pending {
-    background-color: #f7cb7375 ;
-}
-
-.done {
-    background-color: #afd6ee75 ;
-}
-
-.cancelled {
-    background-color: #f7737375 ;
-}
-
+.positiva {
+    color: rgb(0, 209, 0);
+  }
+  
+  .negativa {
+    color: red;
+  }
+  
+  .pending {
+    color: yellow;
+  }
+  
+  .done {
+    color: cadetblue;
+  }
+  
+  .cancelled {
+    color: red;
+    text-decoration: line-through;
+  }

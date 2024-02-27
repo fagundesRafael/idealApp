@@ -1,4 +1,4 @@
-import { Client, Transaction, User } from "./models";
+import { Client, Transaction, User } from "@/app/lib/models";
 import { connectToDB } from "./utils";
 
 export const fetchUsers = async (q, page) => {
@@ -74,13 +74,29 @@ export const fetchClient = async (id) => {
 export const fetchTransactions = async (q, page) => {
   const regex = new RegExp(q, "i");
 
-  const ITEM_PER_PAGE = 14
+  const ITEM_PER_PAGE = 14;
 
   try {
     connectToDB();
-    const count = await Transaction.find({ transactionName: { $regex: regex } }).count()
-    const transactions = await Transaction.find({ transactionName: { $regex: regex } }).limit(ITEM_PER_PAGE).skip(ITEM_PER_PAGE * (page -1));
-    return {count, transactions};
+    const count = await Transaction.find({ transactionName: { $regex: regex } }).count();
+    const transactions = await Transaction.find({ transactionName: { $regex: regex } })
+      .sort({ createdAt: -1 })
+      .limit(ITEM_PER_PAGE)
+      .skip(ITEM_PER_PAGE * (page - 1));
+    return { count, transactions };
+  } catch (err) {
+    console.log(err);
+    throw new Error("Failed to fetch transactions!");
+  }
+};
+
+export const fetchAllTransactions = async () => {
+
+  try {
+    connectToDB();
+    
+    const transactions = await Transaction.find();
+    return { transactions};
   } catch (err) {
     console.log(err);
     throw new Error("Failed to fetch transactions!");

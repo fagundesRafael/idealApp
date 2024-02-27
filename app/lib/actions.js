@@ -1,6 +1,6 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import { Client, Transaction, User } from "./models";
+import { User, Client, Transaction } from "./models";
 import { connectToDB } from "./utils";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
@@ -30,6 +30,38 @@ export const addUser = async (formData) => {
   } catch (err) {
     console.log(err);
     throw new Error("Failed to create user!");
+  }
+
+  revalidatePath("/usuarios");
+  redirect("/usuarios");
+};
+
+export const updateUser = async (formData) => {
+  const { id, username, email, password, phone, address, isAdmin, isActive } =
+    Object.fromEntries(formData);
+
+  try {
+    connectToDB();
+
+    const updateFields = {
+      username,
+      email,
+      password,
+      phone,
+      address,
+      isAdmin,
+      isActive,
+    };
+
+    Object.keys(updateFields).forEach(
+      (key) =>
+        (updateFields[key] === "" || undefined) && delete updateFields[key]
+    );
+
+    await User.findByIdAndUpdate(id, updateFields);
+  } catch (err) {
+    console.log(err);
+    throw new Error("Failed to update user!");
   }
 
   revalidatePath("/usuarios");

@@ -14,38 +14,38 @@ import {
 const data = [
   {
     name: "Dom",
-    visit: 4000,
-    click: 2400,
+    vvvv: 4000,
+    cccc: 2400,
   },
   {
     name: "Seg",
-    visit: 3000,
-    click: 1398,
+    vvvv: 3000,
+    cccc: 1398,
   },
   {
     name: "Ter",
-    visit: 2000,
-    click: 3800,
+    vvvv: 2000,
+    cccc: 3800,
   },
   {
     name: "Qua",
-    visit: 2780,
-    click: 3908,
+    vvvv: 2780,
+    cccc: 3908,
   },
   {
     name: "Qui",
-    visit: 1890,
-    click: 4800,
+    vvvv: 1890,
+    cccc: 4800,
   },
   {
     name: "Sex",
-    visit: 2390,
-    click: 3800,
+    vvvv: 2390,
+    cccc: 3800,
   },
   {
     name: "Sab",
-    visit: 3490,
-    click: 4300,
+    vvvv: 3490,
+    cccc: 4300,
   },
 ];
 
@@ -71,13 +71,13 @@ const Chart = () => {
           <Legend />
           <Line
             type="monotone"
-            dataKey="visit"
+            dataKey="vvvv"
             stroke="#8884d8"
             strokeDasharray="5 5"
           />
           <Line
             type="monotone"
-            dataKey="click"
+            dataKey="cccc"
             stroke="#82ca9d"
             strokeDasharray="3 4 5 2"
           />

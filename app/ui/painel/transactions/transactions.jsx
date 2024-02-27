@@ -1,82 +1,62 @@
 import React from "react";
 import styles from "./transactions.module.css";
-import Image from "next/image";
+import { fetchAllTransactions } from "@/app/lib/data";
 
-const Transactions = () => {
+const Transactions = async () => {
+  const { transactions } = await fetchAllTransactions();
+
+  const getOnlyFiveLast = (() => {
+  
+    const sortedTransactions = transactions.sort((a, b) => {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+  
+    const recentTransactions = sortedTransactions.slice(0, 5);
+  
+    return recentTransactions
+  }) ()
+
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Últimas Transações</h2>
       <table className={styles.table}>
         <thead>
           <tr>
-            <td>Nome</td>
+            <td>Transação</td>
+            <td>Cliente</td>
+            <td>Quantidade</td>
+            <td>Valor</td>
+            <td>Lucro</td>
+            <td>Liquidez</td>
             <td>Status</td>
-            <td>Data</td>
-            <td>Montante</td>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <div className={styles.user}>
-                <Image
-                  className={styles.userImage}
-                  src="/noavatar.png"
-                  width={40}
-                  height={40}
-                  alt=""
-                />
-                Zé da Beira
-              </div>
-            </td>
-            <td>
-              <span className={`${styles.status} ${styles.pending}`}>
-                Pendente
-              </span>
-            </td>
-            <td>14/02/2024</td>
-            <td>R$ 2.200</td>
-          </tr>
-          <tr>
-            <td>
-              <div className={styles.user}>
-                <Image
-                  className={styles.userImage}
-                  src="/noavatar.png"
-                  width={40}
-                  height={40}
-                  alt=""
-                />
-                João das Couves
-              </div>
-            </td>
-            <td>
-              <span className={`${styles.status} ${styles.done}`}>Concluso</span>
-            </td>
-            <td>14/02/2024</td>
-            <td>R$ 3.000</td>
-          </tr>
-          <tr>
-            <td>
-              <div className={styles.user}>
-                <Image
-                  className={styles.userImage}
-                  src="/noavatar.png"
-                  width={40}
-                  height={40}
-                  alt=""
-                />
-                Maria das Quengas
-              </div>
-            </td>
-            <td>
-              <span className={`${styles.status} ${styles.cancelled}`}>
-                Cancelado
-              </span>
-            </td>
-            <td>14/02/2024</td>
-            <td>R$ 600,00</td>
-          </tr>
+          {getOnlyFiveLast?.map((transaction) => (
+            <tr key={transaction.id}>
+              <td className={styles.transaction}>{transaction.transactionName}</td>
+              <td>{transaction.clientName.slice(0, 16) || "_"}</td>
+              <td>
+                {transaction.quantity} {transaction.measurementUnit}
+              </td>
+              <td>R$ {transaction.price}</td>
+              <td>R$ {transaction.downPayment - transaction.cost}</td>
+              {transaction.downPayment < transaction.cost ? (
+                <td className={styles.negativa}>negativa</td>
+              ) : (
+                <td className={styles.positiva}>positiva</td>
+              )}
+              {transaction.orderStatus === "pendente" && (
+                <td className={styles.pending}>{transaction.orderStatus}</td>
+              )}
+              {transaction.orderStatus === "concluso" && (
+                <td className={styles.done}>{transaction.orderStatus}</td>
+              )}
+              {transaction.orderStatus === "cancelado" && (
+                <td className={styles.cancelled}>{transaction.orderStatus}</td>
+              )}
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

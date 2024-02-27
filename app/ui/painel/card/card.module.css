@@ -6,32 +6,34 @@
     gap: 20px;
     cursor: pointer;
     width: 100%;
-}
-
-.container:hover {
+  }
+  
+  .container:hover {
     background-color: #2e374a;
-}
-
-.texts {
+  }
+  
+  .texts {
     display: flex;
     flex-direction: column;
     gap: 20px;
-}
-
-.number {
+  }
+  
+  .number {
     font-size: 24px;
     font-weight: 500;
-}
-
-.detail {
+  }
+  
+  .detail {
     font-size: 14px;
     font-weight: 300;
-}
-
-.positive {
+  }
+  
+  .positive {
     color: lime;
-}
-
-.negative {
+    font-weight: bolder;
+  }
+  
+  .negative {
+    font-weight: bolder;
     color: red;
-}
+  }
